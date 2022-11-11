@@ -216,15 +216,55 @@ const adminUpload = async(req,res,next) => {
             return res.status(400).send(validateResult.error)
         }
 
+        const path = require('path'); // paquete de Node con el cual quiero especificar en dónde serán guardadas las imágenes
+        const { v4: uuidv4 } = require('uuid');
+        const uploadDirectory = path.resolve(__dirname, '../../frontend/public/images/products')
+
+        let product = await Product.findById(req.query.productId).orFail();
+
+        let imagesTable = []
         if(Array.isArray(req.files.images)){
-            res.send('you sent ' + req.files.images.length + ' images')
+            imagesTable = req.files.images;
         } else{
-            res.send('You sent only one image')
+            imagesTable.push(req.files.images);
         }
+
+        for(let image of imagesTable){
+            var fileName = uuidv4() + path.extname(image.name);
+            var uploadPath = uploadDirectory + '/' + fileName;
+            product.images.push({ path: '/images/products/' + fileName});
+            image.mv(uploadPath, function(err){
+                if(err){
+                    return res.status(500).send(err)
+                }
+            });
+        }
+        await product.save();
+        return res.send('File uploaded')
     }catch(err){
         next(err);
     }
 }
 
+const adminDeleteProductImage = async(req,res,next) => {
+    try{
+        const imagePath = decodeURIComponent(req.params.imagePath)
+        const path = require('path');
+        const finalPath = path.resolve('../frontend/public' + imagePath)
+
+        const fs = require('fs');
+        fs.unlink(finalPath, (err) => {
+            if(err){
+                res.status(500).send(err)
+            }
+        })
+
+        await Product.findOneAndUpdate( { _id: req.params.productId }, { $pull: { images: { path: imagePath }}}).orFail();
+        return res.send();
+    } catch(err){
+        next(err);
+    }
+}
+
 module.exports = { getProducts, getProductsById, getBestSellers, adminGetProducts, adminDeleteProduct, adminCreateProduct, adminUpdateProduct, 
-        adminUpload } ;
+        adminUpload, adminDeleteProductImage } ;
