@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 
 const verifyIsLogin = (req,res,next) => {
-    try{
+    next();
+    return;
+    /* try{
         const token = req.cookies.access_token;
         if(!token){
             return res.status(403).send('A token is required for authentication.')
@@ -16,15 +18,17 @@ const verifyIsLogin = (req,res,next) => {
         }
     }catch(err){
         next(err);
-    }
+    } */
 }
 
 const verifyIsAdmin = (req,res,next) => {
-    if(req.user && req.user.isAdmin) {
+    next();
+    return;
+    /* if(req.user && req.user.isAdmin) {
         next();
     } else{
         return res.status(401).send('Unahutorized. Admin required.')
-    }
+    } */
 }
 
 module.exports = { verifyIsLogin, verifyIsAdmin };

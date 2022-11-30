@@ -8,6 +8,7 @@ import ProductForListComponent from "../components/ProductForListComponent";
 import PaginationComponent from "../components/PaginationComponent";
 
 const ProductListPage = () => {
+    
     return (
         <Container fluid>
             <Row>
@@ -22,7 +23,7 @@ const ProductListPage = () => {
                         <ListGroup.Item><CategoryFilterComponent /></ListGroup.Item>
                         <ListGroup.Item><AttributesFilterComponent /></ListGroup.Item>
                         <ListGroup.Item>
-                            <Button variant="primary">Filter</Button>
+                            <Button variant="primary">Filter</Button> {" "}
                             <Button variant="danger">Reset Filter</Button>
                         </ListGroup.Item>
                     </ListGroup>
