@@ -1,27 +1,26 @@
 import { ListGroup, Col, Row, Image, Form, Button } from "react-bootstrap";
 
 
-const CartItemComponent = () => {
+const CartItemComponent = ({ item, orderCreated=false}) => {
 
     return(
         <>
             <ListGroup.Item>
                 <Row>
                     <Col md={2}>
-                        <Image crossOrigin="anonymous" src="/images/monitors-category.png" fluid/>
+                        <Image crossOrigin="anonymous" src={item.image ? (item.image.path ?? null) : null} fluid/>
                     </Col>
                     <Col md={2}>
-                        Product brand <br />
-                        Name 
+                        {item.name}
                     </Col>
                     <Col md={2}>
-                        <b>$123</b>
+                        <b>${item.price}</b>
                     </Col>
                     <Col md={3}>
-                        <Form.Select>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                        <Form.Select onChange={()=>{}} disabled={orderCreated} value={item.quantity}>
+                            {[...Array(item.count).keys()].map((x) => (
+                                <option value={x+1}>{x+1}</option>
+                            ))}                            
                         </Form.Select>
                     </Col>
                     <Col md={3}>
