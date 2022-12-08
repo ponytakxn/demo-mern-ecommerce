@@ -4,14 +4,19 @@ import AdminLinkComponents from "../../../components/admin/AdminLinksComponent";
 
 import { useState, useEffect } from "react";
 
+import { logout } from "../../../redux/actions/userActions";
+import { useDispatch } from "react-redux";
+
 const OrdersPageComponent = ({ getOrders }) => {
 
     const [orders, setOrders] = useState([]);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         getOrders()
             .then((orders) => setOrders(orders))
-            .catch(err => console.log(err.response.data.message ? err.response.data.message : err.response.data))
+            .catch(err => dispatch(logout())) //console.log(err.response.data.message ? err.response.data.message : err.response.data))
     }, []);
 
     return (

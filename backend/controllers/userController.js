@@ -58,7 +58,7 @@ const loginUser = async(req,res,next) => {
             return res.status(400).send('All inputs are required.');
         }
 
-        const user = await User.findOne({email})
+        const user = await User.findOne({email}).orFail();
         if(user && comparePasswords(password, user.password)){
             let cookieParams = {
                 httpOnly: true,
@@ -74,7 +74,7 @@ const loginUser = async(req,res,next) => {
                 'access_token', 
                 generateAuthToken(user._id,user.name,user.lastName,user.email,user.isAdmin), cookieParams)
                 .json({
-                    success: 'User logged in',
+                    success: 'user logged in',
                     userLoggedIn: { 
                         _id: user._id, 
                         name: user.name, 
@@ -84,7 +84,7 @@ const loginUser = async(req,res,next) => {
                         doNotLogout}
                 });
         } else{
-            return res.status(401).send('Wrong credentials')
+            return res.status(401).send('wrong credentials')
         }
     }catch(err){
         next(err);

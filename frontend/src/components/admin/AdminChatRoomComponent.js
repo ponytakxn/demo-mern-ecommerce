@@ -6,7 +6,6 @@ const AdminChatRoomComponent = () => {
     const [toast, closeToast] = useState(true);
     const close = () => closeToast(false);
     
-    
     return (
         <>
             <Toast show={toast} onClose={close} className="ms-4 mb-5">
