@@ -5,14 +5,11 @@ import AdminLinkComponents from "../../../components/admin/AdminLinksComponent";
 import { useState, useEffect } from "react";
 
 import { logout } from "../../../redux/actions/userActions";
-import { useDispatch } from "react-redux";
 
 const ProductsPageComponent = ({fetchProducts, deleteProduct}) => {
 
     const [products, setProducts] = useState([]);
     const [productDeleted, setProductDeleted] = useState(false);
-
-    const dispatch = useDispatch();
 
     const deleteHandler = async (productId) => {
         if(window.confirm("Are you sure?")){
@@ -27,7 +24,7 @@ const ProductsPageComponent = ({fetchProducts, deleteProduct}) => {
         const abctrl = new AbortController();
         fetchProducts(abctrl)
             .then((res) => setProducts(res))
-            .catch((err) => dispatch(logout())) //console.log(err.response.data.message ? err.response.data.message : err.response.data));
+            .catch((err) => err.response.data.message ? err.response.data.message : err.response.data)
         
         return () => abctrl.abort();
     }, [productDeleted]);

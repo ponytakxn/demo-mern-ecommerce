@@ -42,6 +42,8 @@ const RegisterPageComponent = ({ registerUserApiRequest, reduxDispatch, setRedux
                     success: data.success, 
                     loading: false});
                 reduxDispatch(setReduxUserState(data.userCreated));
+                sessionStorage.setItem('userInfo', JSON.stringify(data.userCreated));
+                if (data.success==='User created') window.location.href = '/user';
             })
             .catch((err) => setRegisterUserResponseState({error: err.response.data.message ? err.response.data.message : err.response.data}))
         }

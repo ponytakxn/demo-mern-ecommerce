@@ -27,8 +27,7 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
         const abctrol = new AbortController();
         fetchUsers(abctrol)
             .then((res) => setUsers(res))
-            .catch((err) => dispatch(logout()))
-                //console.log(err.response.data.message ? err.response.data.message : err.response.data));
+            .catch((err) => console.log(err.response.data.message ? err.response.data.message : err.response.data));
         return () => abctrol.abort();
     }, [userDeleted]);
 
