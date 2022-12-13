@@ -94,7 +94,8 @@ const RegisterPageComponent = ({ registerUserApiRequest, reduxDispatch, setRedux
                             <Form.Control 
                                 type="password" 
                                 placeholder="Password" 
-                                required name="password" 
+                                required 
+                                name="password" 
                                 minLength={6} 
                                 onChange={onChange}
                             />
@@ -109,7 +110,8 @@ const RegisterPageComponent = ({ registerUserApiRequest, reduxDispatch, setRedux
                             <Form.Control 
                                 type="password" 
                                 placeholder="Repeat password" 
-                                required name="confirmPassword" 
+                                required 
+                                name="confirmPassword" 
                                 minLength={6} 
                                 onChange={onChange}
                                 isInvalid={!passwordsMatchState}

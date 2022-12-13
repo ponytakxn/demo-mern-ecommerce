@@ -3,11 +3,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { logout } from '../redux/actions/userActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HeaderComponent = () => {
 
     const dispatch = useDispatch();
+    const { userInfo } = useSelector((state) => state.userRegisterLogin);
 
     return (
 
@@ -42,28 +43,44 @@ const HeaderComponent = () => {
                 </Nav>
             </Nav>
             <Nav>
-                <LinkContainer to="/admin/orders">
-                    <Nav.Link>Admin</Nav.Link>
-                </LinkContainer>
-                <NavDropdown title="Juan Pérez" id="collasible-nav-dropdown">
-                    <NavDropdown.Item eventKey="/user/my-orders" as={Link} to="/user/my-orders">My orders</NavDropdown.Item>
-                    <NavDropdown.Item eventKey="/user" as={Link} to="/user">My profile</NavDropdown.Item>
-                    <Dropdown.Divider />
-                    <NavDropdown.Item onClick={() => dispatch(logout())}>Logout</NavDropdown.Item>
-                </NavDropdown>
-                <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/register">
-                    <Nav.Link>Register</Nav.Link>
-                </LinkContainer>
-                <Nav.Link as={Link} to="/cart">
-                    <Badge pill bg="danger">
-                        2
-                    </Badge>
-                    <i className="bi bi-cart4"></i>
-                    <span className="ms-1">CART</span>
-                </Nav.Link>
+                {userInfo.isAdmin ? (
+                    <LinkContainer to="/admin/orders">
+                        <Nav.Link>Admin</Nav.Link>
+                    </LinkContainer>
+
+                ) : userInfo.name && !userInfo.isAdmin ? (
+                    <>
+                    <NavDropdown title={`${userInfo.name} ${userInfo.lastName}`} id="collasible-nav-dropdown">
+                        <NavDropdown.Item eventKey="/user/my-orders" as={Link} to="/user/my-orders">My orders</NavDropdown.Item>
+                        <NavDropdown.Item eventKey="/user" as={Link} to="/user">My profile</NavDropdown.Item>
+                        <Dropdown.Divider />
+                        <NavDropdown.Item onClick={() => dispatch(logout())}>Logout</NavDropdown.Item>
+                    </NavDropdown>
+
+                    <Nav.Link as={Link} to="/cart">
+                        <Badge pill bg="danger">
+                            2
+                        </Badge>
+                        <i className="bi bi-cart4"></i>
+                        <span className="ms-1">CART</span>
+                    </Nav.Link>
+                    </>
+
+                ) : (
+                    <>
+                    <LinkContainer to="/login">
+                        <Nav.Link>Login</Nav.Link>
+                    </LinkContainer>
+                    
+                    <LinkContainer to="/register">
+                        <Nav.Link>Register</Nav.Link>
+                    </LinkContainer>
+                    </>
+                ) }
+                
+                
+                
+                
             </Nav>
             </Navbar.Collapse>
         </Container>
