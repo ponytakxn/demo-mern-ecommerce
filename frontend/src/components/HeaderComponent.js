@@ -9,6 +9,7 @@ const HeaderComponent = () => {
 
     const dispatch = useDispatch();
     const { userInfo } = useSelector((state) => state.userRegisterLogin);
+    const itemsCount = useSelector((state)=> state.cart.itemsCount);
 
     return (
 
@@ -59,7 +60,7 @@ const HeaderComponent = () => {
 
                     <Nav.Link as={Link} to="/cart">
                         <Badge pill bg="danger">
-                            2
+                            {itemsCount ? itemsCount : ''}
                         </Badge>
                         <i className="bi bi-cart4"></i>
                         <span className="ms-1">CART</span>

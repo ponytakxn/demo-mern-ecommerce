@@ -23,7 +23,7 @@ const getOrderDetails = async(req,res,next) => {
 const createOrder = async(req,res,next) => {
     try{
         const { cartItems, orderTotal, paymentMethod } = req.body;
-        if(!(cartItems && orderTotal && paymentMethod)){
+        if(!cartItems || !orderTotal || !paymentMethod){
             return res.status(400).send('All inputs are required');
         }
 

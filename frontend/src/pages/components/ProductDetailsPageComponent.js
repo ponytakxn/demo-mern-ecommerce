@@ -10,9 +10,11 @@ const ProductDetailsPageComponent = ({ addToCartReduxAction, reduxDispatch }) =>
 
     const {id} = useParams();
     const [quantity, setQuantity] = useState(1);
+    const [showCartMessage, setShowCartMessage] = useState(false);
 
     const addToCartHandler = () => {
         reduxDispatch(addToCartReduxAction(id, quantity));
+        setShowCartMessage(true);
     }
 
     var options = {
@@ -33,7 +35,7 @@ const ProductDetailsPageComponent = ({ addToCartReduxAction, reduxDispatch }) =>
     
     return (
         <Container>
-            <AddedToCartMessageComponent/>
+            <AddedToCartMessageComponent showCartMessage={showCartMessage} setShowCartMessage={setShowCartMessage} />
             <Row className="mt-5">
                 <Col style={{zIndex: 1}} md={4}>
                     <div id="first">
