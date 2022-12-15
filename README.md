@@ -1,4 +1,4 @@
-# demo-ecommerce @ponytakxn (J.G. Valdés Vergara)
+# demo-mern-ecommerce @ponytakxn (J.G. Valdés Vergara)
 
 Proyecto práctico de realización de un demo de un E-Commerce profesional. Este proyecto está enmarcado en el desarrollo del curso "MERN Stack Project Course 2022 - Build Fullstack React App" de Udemy.
 
